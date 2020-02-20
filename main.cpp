@@ -38,8 +38,15 @@ int main(){
 		indices[i] = i;
 	}
 
-
-	sort(indices, indices+L, [&libs](int i, int j){return libs[i][0]/libs[i][2] >libs[j][0] / libs[j][2];}); 
+	int sum[L];
+	int idx = 0;
+	for(vector<int> v : books){
+		for(int b_idx : v){
+			sum[idx] += scores[b_idx];
+		}
+		idx++;
+	}
+	sort(indices, indices+L, [&sum, &libs](int i, int j){return sum[i]/libs[i][1] > sum[j]/libs[j][1];}); 
 
 
 	vector<int> signed_up;
@@ -57,7 +64,7 @@ int main(){
 			actions.push_back(pair<int,vector<int>>(indices[last_index],vector<int>()));
 			sort(books[indices[last_index]].begin(),books[indices[last_index]].end(),[&scores](int i, int j){return scores[i] > scores[j];});
 		}
-		
+		int ctr = 0;
 		for(auto lib : signed_up){
 			int i = 0;
 			while(i<libs[lib][2] && !books[lib].empty()){
@@ -67,10 +74,10 @@ int main(){
 					score+= scores[book];
 					seen_books.push_back(book);
 					++i;
-					actions[last_index].second.push_back(book);
+					actions[ctr].second.push_back(book);
 				}
 			}
-
+			++ctr;
 		}
 
 		--sup_remaining_t;			
@@ -78,13 +85,22 @@ int main(){
 
 	cerr<< "Score: " << score<< endl;
 
-	printf("%ld\n",actions.size());
+	int count=0;
+	for(auto act : actions){
+		if(act.second.size() > 0){
+			count++;
+		}
+	}
+
+	printf("%ld\n",count);
 	for(auto lib : actions){
+		if(lib.second.size() > 0){
 		printf("%d %d\n",lib.first, lib.second.size());
 		for(auto book : lib.second){
 			printf("%d ",book);
 		}
 		printf("\n");
+		}
 	}
 
 
@@ -114,3 +130,4 @@ int main(){
 
 	return 0;
 }
+
