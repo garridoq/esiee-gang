@@ -6,11 +6,6 @@
 
 
 using namespace std;
-
-struct by_a{
-      	int** _libs;
-		bool operator()(int i, int j) {return _libs[i][0]/_libs[i][2] >_libs[j][0] / _libs[j][2];}		
-};
 	
 int main(){
 	
@@ -43,15 +38,16 @@ int main(){
 		indices[i] = i;
 	}
 
-   struct by_a op ={(int**)libs};
 
-   sort(indices, indices+L, op); 
+   sort(indices, indices+L, [&libs](int i, int j){return libs[i][0]/libs[i][2] >libs[j][0] / libs[j][2];}); 
 
 	for(int i : indices){
-		cout << i << '|' << endl;
+		cout << i << '|';
 	}
+	cout << endl;
 
 	//Test
+
 	printf("%d %d %d\n",B,L,D);
 	for(auto score : scores){
 		printf("%d ",score);
