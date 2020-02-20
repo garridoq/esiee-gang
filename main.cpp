@@ -50,7 +50,17 @@ int main(){
 	// 	}
 	// 	printf("\n");
 	// }
+	int indices[L];
+	for(int i = 0; i< L;++i){
+		indices[i] = i;
+	}
+	sort(indices, indices+L, [&libs](int i, int j){return libs[i][0]/libs[i][2] >libs[j][0] / libs[j][2];}); 
+	// for(int i : indices){
+	// 	cout << i << '|';
+	// }
+	// cout << endl;
 
+	//Sort
 	
 
 
@@ -62,23 +72,28 @@ int main(){
 	for(int i=0; i<L; ++i){
 		// printf("%d %d \n",i,libs[i][0]);
 		vector<int> livresAScan ;
-		for(int j=0;j<libs[i][0];++j){
+		for(int j=0;j<libs[indices[i]][0];++j){
 			
 			
-			if  (! ( std::find(dejaFaits.begin(), dejaFaits.end(), books[i][j]) != dejaFaits.end()) ){
-				dejaFaits.push_back(books[i][j]);
-				livresAScan.push_back(books[i][j]);
+			if  (! ( std::find(dejaFaits.begin(), dejaFaits.end(), books[indices[i]][j]) != dejaFaits.end()) ){
+				dejaFaits.push_back(books[indices[i]][j]);
+				livresAScan.push_back(books[indices[i]][j]);
 			}
 
 		}
-		cout << i << " " << livresAScan.size()<<std::endl;
-		for (std::vector<int>::const_iterator i = livresAScan.begin(); i != livresAScan.end(); ++i){
-    		std::cout << *i << ' ';
+		if(livresAScan.size() != 0){
+			cout << indices[i] << " " << livresAScan.size()<<std::endl;
+			for (std::vector<int>::const_iterator i = livresAScan.begin(); i != livresAScan.end(); ++i){
+				std::cout << *i << ' ';
+			}
+			printf("\n");
 		}
-		printf("\n");
 	}
 
 
 
 	return 0;
 }
+
+
+
