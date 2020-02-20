@@ -1,5 +1,5 @@
 all:
-	g++ -Wall main.cpp -o main
+	g++ -Wall main.cpp -o main -O3
 clear:
 	rm *.o
 
